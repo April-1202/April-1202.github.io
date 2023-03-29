@@ -5,19 +5,11 @@
         <description>Markdown - Category - 卓越</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1950158396@qq.com (yzy)</managingEditor>
             <webMaster>1950158396@qq.com (yzy)</webMaster><lastBuildDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/markdown/" rel="self" type="application/rss+xml" /><item>
-    <title>Basic Markdown Syntax</title>
-    <link>http://example.org/abc/</link>
-    <pubDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>http://example.org/abc/</guid>
-    <description><![CDATA[<p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files.</p>]]></description>
-</item>
-<item>
     <title>Markdown 基本语法</title>
-    <link>http://example.org/cde/</link>
+    <link>http://example.org/markdown%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B/</link>
     <pubDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</pubDate>
     <author>Dillon</author>
-    <guid>http://example.org/cde/</guid>
+    <guid>http://example.org/markdown%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B/</guid>
     <description><![CDATA[<p>这篇文章提供了可以在 Hugo 的文章中使用的基本 Markdown 语法示例.</p>]]></description>
 </item>
 </channel>
