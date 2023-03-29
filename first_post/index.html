@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>一些mysql的优化点 - 卓越</title><meta name="Description" content="这篇文章提供了mysql查询优化的一些方案和建议."><meta property="og:title" content="一些mysql的优化点" />
+<meta property="og:description" content="这篇文章提供了mysql查询优化的一些方案和建议." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://april-1202.github.io/first_post/" /><meta property="og:image" content="https://april-1202.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-28T16:41:27+08:00" />
+<meta property="article:modified_time" content="2023-03-28T16:41:27+08:00" /><meta property="og:site_name" content="My cool site" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://april-1202.github.io/logo.png"/>
+
+<meta name="twitter:title" content="一些mysql的优化点"/>
+<meta name="twitter:description" content="这篇文章提供了mysql查询优化的一些方案和建议."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://april-1202.github.io/first_post/" /><link rel="prev" href="https://april-1202.github.io/%E7%AC%AC%E4%B8%89%E4%B8%AA/" /><link rel="next" href="https://april-1202.github.io/cde/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "一些mysql的优化点",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/april-1202.github.io\/first_post\/"
+        },"genre": "posts","keywords": "mysql","wordcount":  82 ,
+        "url": "https:\/\/april-1202.github.io\/first_post\/","datePublished": "2023-03-28T16:41:27+08:00","dateModified": "2023-03-28T16:41:27+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "yzy"
+            },"description": "这篇文章提供了mysql查询优化的一些方案和建议."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="卓越">My cool site</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="卓越">My cool site</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">一些mysql的优化点</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>yzy</a></span>&nbsp;<span class="post-category">included in <a href="/categories/mysql/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>mysql</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-28">2023-03-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;82 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一-前言">一 前言</a></li>
+    <li><a href="#二-优化的思路和原则有哪些">二 优化的思路和原则有哪些</a>
+      <ul>
+        <li><a href="#1-优化更需要优化的查询">1 优化更需要优化的查询</a></li>
+        <li><a href="#2-从explain入手">2 从explain入手</a></li>
+      </ul>
+    </li>
+    <li><a href="#三-合理利用explain">三 合理利用Explain</a></li>
+    <li><a href="#四-合理利用索引">四 合理利用索引</a>
+      <ul>
+        <li><a href="#1-索引的利弊">1 索引的利弊</a></li>
+        <li><a href="#2-怎么样有效的建立索引">2 怎么样有效的建立索引</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>这篇文章提供了mysql查询优化的一些方案和建议.</p>
+<h2 id="一-前言">一 前言</h2>
+<p>在使用sql进行查询的时候，就会经常会遇到查询速度过慢，因为掌握一些优化的小技巧，会大大帮助我们提高sql的查询速率</p>
+<h2 id="二-优化的思路和原则有哪些">二 优化的思路和原则有哪些</h2>
+<ol>
+<li>优化更需要优化的查询.</li>
+<li>从explain入手.</li>
+<li>用小结果集驱动大结果集.</li>
+<li>尽可能在索引中完成排序.</li>
+<li>只取出自己需要的字段.</li>
+<li>使用最有效的过滤条件.</li>
+<li>尽可能避免复杂的join.</li>
+</ol>
+<h3 id="1-优化更需要优化的查询">1 优化更需要优化的查询</h3>
+<p>高并发的低消耗的查询对整个系统的影响远大于低并发高消耗的查询</p>
+<h3 id="2-从explain入手">2 从explain入手</h3>
+<p>explain可以告诉你这个查询在数据库中是一个什么样的执行计划来实现的。
+首先我们需要一个目标，通过不断的调整尝试，再借助explain来验证结果是否满足自己的需求，直到达到预期的结果</p>
+<h2 id="三-合理利用explain">三 合理利用Explain</h2>
+<p>explain关键字段的展示</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>select_type</td>
+<td>查询类型：<br>DEPENDENT SUBQUERY : 子查询中内层的第一个SELECT,依赖于外部查询结果集；<br>DEPENDENT UNION：子查询中的UNION中从第二个SELECT 开始的后面所有SELECT,同样依赖于外部查询结果集;<br>PRIMARY: 子查询中的最外层查询，不是主键查询；<br>SUBQUERY：子查询内层查询的第一个SELECT,结果不依赖于外部结果集；<br>UNCACHEABLE SUBQUERY：结果集无法缓存的子查询；<br>UNION：UNION语句中第二个SELECT开始的后面所有SELECT,第一个SELECT为PRIMARY<br>UNION RESULT：UNION中的合并结果</td>
+</tr>
+<tr>
+<td>table</td>
+<td>所访问数据库中表的名称</td>
+</tr>
+<tr>
+<td>type</td>
+<td>访问方式：<br>ALL: 全表扫描<br>const: 常量，最多只有一条记录匹配，由于是常量，所以实际上只需要读一次<br>eq_ref: 最多只有一条匹配结果，一般是主键或者唯一索引来访问的<br>index: 全索引扫描<br>range: 索引范围扫描<br>ref: jion语句中被驱动表索引的引用查询<br>system: 系统表，表中只有一行数据</td>
+</tr>
+<tr>
+<td>possible_keys</td>
+<td>可能使用到的索引</td>
+</tr>
+<tr>
+<td>key</td>
+<td>使用的索引</td>
+</tr>
+<tr>
+<td>key_len</td>
+<td>索引长度</td>
+</tr>
+<tr>
+<td>rows</td>
+<td>估算出来的结果集的总记录数</td>
+</tr>
+<tr>
+<td>extra</td>
+<td>额外信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="四-合理利用索引">四 合理利用索引</h2>
+<h3 id="1-索引的利弊">1 索引的利弊</h3>
+<p>优点：提高数据检索速度，降低数据库的io成本
+缺点：查询需要更新索引信息带来额外的资源消耗，索引还会占用额外的存储空间</p>
+<h3 id="2-怎么样有效的建立索引">2 怎么样有效的建立索引</h3>
+<ol>
+<li>较频繁的作为条件的查询字段应该创建索引</li>
+<li>更新频繁的字段不适合建立索引</li>
+<li>唯一性太差的字段不适合建立索引（比如：性别、状态）</li>
+<li>不出现在where中的字段不适合建立索引</li>
+</ol></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-28</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/first_post/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://april-1202.github.io/first_post/" data-title="一些mysql的优化点" data-via="xxxx" data-hashtags="mysql"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://april-1202.github.io/first_post/" data-hashtag="mysql"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://april-1202.github.io/first_post/" data-title="一些mysql的优化点"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://april-1202.github.io/first_post/" data-title="一些mysql的优化点"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://april-1202.github.io/first_post/" data-title="一些mysql的优化点"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/mysql/">mysql</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E7%AC%AC%E4%B8%89%E4%B8%AA/" class="prev" rel="prev" title="这是第一个博客"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>这是第一个博客</a>
+            <a href="/cde/" class="next" rel="next" title="Markdown 基本语法">Markdown 基本语法<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">yzy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
