@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>java - Category - 卓越</title>
+        <link>http://example.org/categories/java/</link>
+        <description>java - Category - 卓越</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1950158396@qq.com (yzy)</managingEditor>
+            <webMaster>1950158396@qq.com (yzy)</webMaster><lastBuildDate>Thu, 30 Mar 2023 17:06:12 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/java/" rel="self" type="application/rss+xml" /><item>
+    <title>List的遍历</title>
+    <link>http://example.org/list%E7%9A%84%E9%81%8D%E5%8E%86/</link>
+    <pubDate>Thu, 30 Mar 2023 17:06:12 &#43;0800</pubDate>
+    <author>yzy</author>
+    <guid>http://example.org/list%E7%9A%84%E9%81%8D%E5%8E%86/</guid>
+    <description><![CDATA[<p>这篇文章提供了java中list的一些遍历方法</p>]]></description>
+</item>
+</channel>
+</rss>

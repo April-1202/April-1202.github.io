@@ -4,22 +4,30 @@
         <link>http://example.org/</link>
         <description>This is my cool site</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1950158396@qq.com (yzy)</managingEditor>
-            <webMaster>1950158396@qq.com (yzy)</webMaster><lastBuildDate>Tue, 28 Mar 2023 16:41:27 &#43;0800</lastBuildDate>
+            <webMaster>1950158396@qq.com (yzy)</webMaster><lastBuildDate>Thu, 30 Mar 2023 17:06:12 &#43;0800</lastBuildDate>
             <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Markdown 基本语法</title>
-    <link>http://example.org/markdown%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B/</link>
-    <pubDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>http://example.org/markdown%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B/</guid>
-    <description><![CDATA[<p>这篇文章提供了可以在 Hugo 的文章中使用的基本 Markdown 语法示例.</p>]]></description>
+    <title>List的遍历</title>
+    <link>http://example.org/list%E7%9A%84%E9%81%8D%E5%8E%86/</link>
+    <pubDate>Thu, 30 Mar 2023 17:06:12 &#43;0800</pubDate>
+    <author>yzy</author>
+    <guid>http://example.org/list%E7%9A%84%E9%81%8D%E5%8E%86/</guid>
+    <description><![CDATA[<p>这篇文章提供了java中list的一些遍历方法</p>]]></description>
+</item>
+<item>
+    <title>docker的安装使用教程</title>
+    <link>http://example.org/docker/</link>
+    <pubDate>Wed, 29 Mar 2023 16:41:27 &#43;0800</pubDate>
+    <author>yzy</author>
+    <guid>http://example.org/docker/</guid>
+    <description><![CDATA[<p>这篇文章提供了docker的安装使用教程</p>]]></description>
 </item>
 <item>
     <title>一些mysql的优化点</title>
-    <link>http://example.org/first_post/</link>
+    <link>http://example.org/mysql%E4%BC%98%E5%8C%96/</link>
     <pubDate>Tue, 28 Mar 2023 16:41:27 &#43;0800</pubDate>
     <author>yzy</author>
-    <guid>http://example.org/first_post/</guid>
+    <guid>http://example.org/mysql%E4%BC%98%E5%8C%96/</guid>
     <description><![CDATA[<p>这篇文章提供了mysql查询优化的一些方案和建议.</p>]]></description>
 </item>
 </channel>

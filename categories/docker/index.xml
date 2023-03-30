@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>docker - Category - 卓越</title>
+        <link>http://example.org/categories/docker/</link>
+        <description>docker - Category - 卓越</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1950158396@qq.com (yzy)</managingEditor>
+            <webMaster>1950158396@qq.com (yzy)</webMaster><lastBuildDate>Wed, 29 Mar 2023 16:41:27 &#43;0800</lastBuildDate><atom:link href="http://example.org/categories/docker/" rel="self" type="application/rss+xml" /><item>
+    <title>docker的安装使用教程</title>
+    <link>http://example.org/docker/</link>
+    <pubDate>Wed, 29 Mar 2023 16:41:27 &#43;0800</pubDate>
+    <author>yzy</author>
+    <guid>http://example.org/docker/</guid>
+    <description><![CDATA[<p>这篇文章提供了docker的安装使用教程</p>]]></description>
+</item>
+</channel>
+</rss>
